@@ -1,24 +1,40 @@
 <script>
-	import PlayerScore from "./components/playerScore.svelte";
+	import TodoForm from "./components/TodoForm.svelte";
 
-	let player1Score = 0;
-	let player2Score = 0;
-	
-	function reset() {
-		player1Score = 0;
-		player2Score = 0;
+	let todos = localStorage.getItem("todos")
+		? JSON.parse(localStorage.getItem("todos"))
+		: [];
+
+	function addTodo(todo) {
+		if (todo !== "") {
+			todos.push({
+				title: todo,
+				done: false,
+			});
+		}
+		todos = todos;
 	}
+
+	function removeTodo(index) {
+		todos.splice(index, 1);
+		todos = todos;
+	}
+
+	$: localStorage.setItem("todos", JSON.stringify(todos));
 </script>
 
 <main>
-	<div class="header">
-		<h1>Player score app</h1>
-		<button on:click={reset}>Reset</button>
-	</div>
-	<div class="player-card">
-		<PlayerScore bind:playerScore={player1Score} playerName="Player 1" />
-		<PlayerScore bind:playerScore={player2Score} playerName="Player 2" />
-	</div>
+	<TodoForm {addTodo} />
+	<ul>
+		{#each todos as { title, done }, index}
+			<li class="todo-con">
+				<p class:done on:click={() => (done = !done)}>{title}</p>
+				{#if done} <span>✔</span> {/if}
+				<span class="delete" on:click={() => removeTodo(index)}>❌</span
+				>
+			</li>
+		{/each}
+	</ul>
 </main>
 
 <style>
@@ -39,22 +55,26 @@
 		gap: 4rem;
 		text-align: center;
 	}
-	
-	.header {
-		width: 100%;
+
+	.todo-con {
+		text-align: left !important;
+		cursor: pointer;
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
+		gap: 1rem;
 	}
 
-	.header button {
-		width: 6.5rem;
+	.todo-con span {
+		text-decoration: none !important;
+		color: green;
 	}
 
-	.player-card {
-		width: 40rem;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+	.done {
+		text-decoration: line-through;
+	}
+
+	.delete:hover {
+		transition: all 0.2s ease-in-out;
+		transform: scale(1.2);
 	}
 </style>
