@@ -16,15 +16,15 @@ cd my-svelte-app
 
 ## Intall the dependencies
 ```
-    npm i
+npm i
 ```
 
 ## Start the local server
 ```
- npm run dev
+npm run dev
 ```
 
 ## Build the svelte app
 ```
-    npm run build
+npm run build
 ```
