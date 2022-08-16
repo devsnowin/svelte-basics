@@ -2,10 +2,10 @@
 Learn the basics of svelte
 
 ## Topics covered
-    [x] Props drilling in svelte
-    [X] state handling
-    [x] form submission
-    [x] Loops in svelte
+   - [x] Props drilling in svelte
+   - [X] state handling
+   - [x] form submission
+   - [x] Loops in svelte
 
 ## Get started
 ```
